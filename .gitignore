@@ -1,12 +1,41 @@
-*.venv
-*venv
-__pycache__/
-*.pyc
+# macOS
+.DS_Store
+
+# SAM build artifacts
+.aws-sam/
+packaged.yaml
+packaged-template.yaml
+
+# Local env and secrets
+env.json
 .env
 .env.*
-.idea/
+
+# Python caches and tooling
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.python-version
+
+# Virtual environments
+venv/
+.venv/
+env/
+*.venv
+*venv
+
+# IDE/project settings
 .vscode/
-.DS_Store
+.idea/
+
+# Node (if present)
 node_modules/
 dist/
-.aws-sam/
