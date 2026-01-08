@@ -37,11 +37,17 @@ Resources:
           TABLE_NAME: !Ref DynamoDBTable
 
       Events:
-        VisitorCount:
+        GetVisitorCount:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /cloud_resume_challenge_backend/
-            Method: get
+            Path: /visitor-count
+            Method: GET
+        
+        PostVisitorCount:
+          Type: Api
+          Properties:
+            Path: /visitor-count
+            Method: POST
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -49,7 +55,7 @@ Outputs:
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   VisitorCountApi:
     Description: "API Gateway endpoint URL for Prod stage for Visitor Count function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/cloud_resume_challenge_backend/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/visitor-count"
   VisitorCountFunction:
     Description: "Visitor Count Lambda Function ARN"
     Value: !GetAtt VisitorCountFunction.Arn
