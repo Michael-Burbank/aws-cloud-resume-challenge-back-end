@@ -16,6 +16,7 @@ Resources:
     DeletionPolicy: Retain
     UpdateReplacePolicy: Retain
     Properties:
+      TableName: Visitor_Count
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: id
