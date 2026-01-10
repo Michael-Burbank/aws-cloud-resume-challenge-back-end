@@ -39,3 +39,5 @@ env/
 # Node (if present)
 node_modules/
 dist/
+sam-app/README.md
+sam-app/samconfig.toml

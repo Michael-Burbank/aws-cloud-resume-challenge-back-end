@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sam-app
+
+  Sample SAM Template for aws cloud resume challenge backend function(s)to create && use DynamoDB and Lambda to count and return website visitors.
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  # DYNAMODB TABLE RESOURCE (On-demand)
+  VisitorCountTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+
+  # LAMBDA FUNCTION RESOURCE
+  VisitorCountFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.12
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref VisitorCountTable
+          # For local testing, override via env.json:
+          # DDB_ENDPOINT_URL: http://host.docker.internal:8000
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref VisitorCountTable
+      Events:
+        GetCount:
+          Type: Api
+          Properties:
+            Path: /count
+            Method: get
+        IncrementCount:
+          Type: Api
+          Properties:
+            Path: /count
+            Method: post
+
+Outputs:
+  VisitorCountApi:
+    Description: "API Gateway endpoint URL for Prod stage for Visitor Count function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/count"
+  VisitorCountFunction:
+    Description: "Visitor Count Lambda Function ARN"
+    Value: !GetAtt VisitorCountFunction.Arn
