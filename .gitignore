@@ -41,3 +41,4 @@ node_modules/
 dist/
 sam-app/README.md
 sam-app/samconfig.toml
+tips.md

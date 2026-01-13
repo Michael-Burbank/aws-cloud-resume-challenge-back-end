@@ -1,0 +1,25 @@
+{
+  "resource": "/count",
+  "path": "/count",
+  "httpMethod": "GET",
+  "headers": {
+    "Accept": "application/json",
+    "Host": "example.execute-api.us-west-1.amazonaws.com",
+    "User-Agent": "Mozilla/5.0"
+  },
+  "multiValueHeaders": null,
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "stage": "Prod",
+    "resourcePath": "/count",
+    "httpMethod": "GET",
+    "protocol": "HTTP/1.1",
+    "requestId": "00000000-0000-0000-0000-000000000000",
+    "requestTime": "01/12/2026:00:00:00 +0000"
+  },
+  "body": null,
+  "isBase64Encoded": false
+}

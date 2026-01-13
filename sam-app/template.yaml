@@ -46,18 +46,18 @@ Resources:
         GetCount:
           Type: Api
           Properties:
-            Path: /count
+            Path: /visitors
             Method: get
         IncrementCount:
           Type: Api
           Properties:
-            Path: /count
+            Path: /visitors
             Method: post
 
 Outputs:
   VisitorCountApi:
     Description: "API Gateway endpoint URL for Prod stage for Visitor Count function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/count"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/visitors"
   VisitorCountFunction:
     Description: "Visitor Count Lambda Function ARN"
     Value: !GetAtt VisitorCountFunction.Arn
