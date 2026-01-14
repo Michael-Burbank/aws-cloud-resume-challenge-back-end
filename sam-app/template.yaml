@@ -3,14 +3,14 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   sam-app
 
-  Sample SAM Template for aws cloud resume challenge backend function(s)to create && use DynamoDB and Lambda to count and return website visitors.
+  Sample SAM Template for aws cloud resume challenge backend function(s) to create && use DynamoDB and Lambda to count and return website visitors.
 
 Globals:
   Function:
     Timeout: 3
 
 Resources:
-  # DYNAMODB TABLE RESOURCE (On-demand)
+  # On Demand DynamoDB Table RESOURCE.
   VisitorCountTable:
     Type: AWS::DynamoDB::Table
     DeletionPolicy: Retain
@@ -24,6 +24,16 @@ Resources:
       KeySchema:
         - AttributeName: id
           KeyType: HASH
+
+  # API GATEWAY RESOURCE WITH - CORS ENABLED. 
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowMethods: "'OPTIONS,GET,POST'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'*'"
 
   # LAMBDA FUNCTION RESOURCE
   VisitorCountFunction:
@@ -46,18 +56,20 @@ Resources:
         GetCount:
           Type: Api
           Properties:
+            RestApiId: !Ref MyApi
             Path: /visitors
             Method: get
         IncrementCount:
           Type: Api
           Properties:
+            RestApiId: !Ref MyApi
             Path: /visitors
             Method: post
 
 Outputs:
   VisitorCountApi:
     Description: "API Gateway endpoint URL for Prod stage for Visitor Count function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/visitors"
+    Value: !Sub "https://${MyApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/visitors"
   VisitorCountFunction:
     Description: "Visitor Count Lambda Function ARN"
     Value: !GetAtt VisitorCountFunction.Arn
