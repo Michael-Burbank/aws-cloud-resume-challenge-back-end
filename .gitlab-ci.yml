@@ -21,7 +21,7 @@ python_tests:
   stage: test
   image: python:3.12
   script:
-    - pip install -r requirements.txt
+    - pip install -r sam-app/src/requirements.txt
     - |
       if pytest; then
         echo "✅ All tests passed."
