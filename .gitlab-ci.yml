@@ -80,11 +80,20 @@ sam_deploy:
     - pip install --no-cache-dir aws-sam-cli awscli
     - |
       cd sam-app
-      if SAM_CLI_TELEMETRY=0 sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --region $AWS_DEFAULT_REGION; then
-        echo "✅ SAM deploy succeeded."
+      if [ -n "$S3_BUCKET" ]; then
+        if SAM_CLI_TELEMETRY=0 sam deploy --s3-bucket "$S3_BUCKET" --no-confirm-changeset --no-fail-on-empty-changeset --stack-name "$STACK_NAME" --capabilities CAPABILITY_IAM --region "$AWS_DEFAULT_REGION"; then
+          echo "✅ SAM deploy succeeded (using S3 bucket $S3_BUCKET)."
+        else
+          echo "❌ SAM deploy failed (using S3 bucket $S3_BUCKET)."
+          exit 1
+        fi
       else
-        echo "❌ SAM deploy failed."
-        exit 1
+        if SAM_CLI_TELEMETRY=0 sam deploy --resolve-s3 --no-confirm-changeset --no-fail-on-empty-changeset --stack-name "$STACK_NAME" --capabilities CAPABILITY_IAM --region "$AWS_DEFAULT_REGION"; then
+          echo "✅ SAM deploy succeeded (using --resolve-s3)."
+        else
+          echo "❌ SAM deploy failed (using --resolve-s3)."
+          exit 1
+        fi
       fi
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
