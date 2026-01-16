@@ -11,12 +11,14 @@ import requests
 # If it does, it loads the environment variables from it.
 @pytest.fixture(scope="session")
 def check_secret_var():
-    env_path = os.path.join("tests", ".env")
-    if os.path.exists(env_path):
-        from dotenv import load_dotenv
-        load_dotenv(dotenv_path=env_path)
-    else:
-        raise ValueError("Please create a .env file in the tests directory with the required environment variables.")
+    # Only load .env if not running in CI/CD
+    if not os.environ.get("CI"):
+        env_path = os.path.join("tests", ".env")
+        if os.path.exists(env_path):
+            from dotenv import load_dotenv
+            load_dotenv(dotenv_path=env_path)
+        else:
+            raise ValueError("Please create a .env file in the tests directory with the required environment variables.")
 
 # Relies on the check_secret_var fixture to ensure .env file exists in tests directory prior to running this fixture.
 @pytest.fixture
