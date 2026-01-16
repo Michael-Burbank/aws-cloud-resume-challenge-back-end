@@ -21,7 +21,7 @@ python_tests:
   stage: test
   image: python:3.12
   script:
-    - pip install -r sam-app/tests/requirements.txt
+    - pip install -r sam-app/src/requirements.txt
     - |
       if pytest sam-app/tests/; then
         echo "✅ All tests passed."
@@ -37,8 +37,9 @@ python_tests:
 # SAM VALIDATE JOB
 sam_validate:
   stage: sam_validate
-  image: public.ecr.aws/sam/cli:latest
+  image: python:3.12
   script:
+    - pip install --no-cache-dir aws-sam-cli
     - |
       if sam validate --lint; then
         echo "✅ SAM template is valid."
@@ -54,8 +55,9 @@ sam_validate:
 # SAM BUILD JOB
 sam_build:
   stage: sam_build
-  image: public.ecr.aws/sam/cli:latest
+  image: python:3.12
   script:
+    - pip install --no-cache-dir aws-sam-cli
     - |
       if sam build; then
         echo "✅ SAM build succeeded."
@@ -71,10 +73,11 @@ sam_build:
 # SAM DEPLOY JOB
 sam_deploy:
   stage: sam_deploy
-  image: public.ecr.aws/sam/cli:latest
+  image: python:3.12
   script:
+    - pip install --no-cache-dir aws-sam-cli awscli
     - |
-      if sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --region $AWS_REGION; then
+      if sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --region $AWS_DEFAULT_REGION; then
         echo "✅ SAM deploy succeeded."
       else
         echo "❌ SAM deploy failed."
