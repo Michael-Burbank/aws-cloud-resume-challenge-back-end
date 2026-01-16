@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   sam-app
 
-  Sample SAM Template for aws cloud resume challenge backend function(s) to create && use DynamoDB and Lambda to count and return website visitors.
+  Customized SAM Template for aws cloud resume challenge backend function(s) to create && use DynamoDB and Lambda / RestAPI to count and return website visitors.
 
 Globals:
   Function:
