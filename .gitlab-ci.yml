@@ -37,7 +37,7 @@ python_tests:
 # SAM VALIDATE JOB
 sam_validate:
   stage: sam_validate
-  image: amazon/aws-sam-cli-build-image-python3.12:latest
+  image: amazon/aws-sam-cli:latest
   script:
     - |
       if sam validate --lint; then
@@ -54,7 +54,7 @@ sam_validate:
 # SAM BUILD JOB
 sam_build:
   stage: sam_build
-  image: amazon/aws-sam-cli-build-image-python3.12:latest
+  image: amazon/aws-sam-cli:latest
   script:
     - |
       if sam build; then
@@ -71,7 +71,7 @@ sam_build:
 # SAM DEPLOY JOB
 sam_deploy:
   stage: sam_deploy
-  image: amazon/aws-sam-cli-build-image-python3.12:latest
+  image: amazon/aws-sam-cli:latest
   script:
     - |
       if sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --region $AWS_REGION; then
