@@ -41,7 +41,8 @@ sam_validate:
   script:
     - pip install --no-cache-dir aws-sam-cli
     - |
-      if sam validate --lint; then
+      cd sam-app
+      SAM_CLI_TELEMETRY=0 if sam validate --lint; then
         echo "✅ SAM template is valid."
       else
         echo "❌ SAM template validation failed."
@@ -59,7 +60,8 @@ sam_build:
   script:
     - pip install --no-cache-dir aws-sam-cli
     - |
-      if sam build; then
+      cd sam-app
+      SAM_CLI_TELEMETRY=0 if sam build; then
         echo "✅ SAM build succeeded."
       else
         echo "❌ SAM build failed."
@@ -77,7 +79,8 @@ sam_deploy:
   script:
     - pip install --no-cache-dir aws-sam-cli awscli
     - |
-      if sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --region $AWS_DEFAULT_REGION; then
+      cd sam-app
+      SAM_CLI_TELEMETRY=0 if sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name $STACK_NAME --capabilities CAPABILITY_IAM --region $AWS_DEFAULT_REGION; then
         echo "✅ SAM deploy succeeded."
       else
         echo "❌ SAM deploy failed."
