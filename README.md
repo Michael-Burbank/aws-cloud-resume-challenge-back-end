@@ -6,35 +6,17 @@
 
 --------------------
 
-### Certification ✅
+### Database ✅
 
-### HTML
+### API ✅
 
-### CSS
+### Python ✅
 
-### Static Website ✅
+### Tests ✅
 
-### HTTPS ✅
+### IaC (AWS SAM / Terraform) ✅
 
-### DNS ✅
+### Source Control ✅
 
-### JavaScript
-
-### Database
-
-### API
-
-### Python
-
-### Tests
-
-### IaC (AWS SAM / Terraform)
-
-### Source Control
-
-### CI/CD (Back end)
-
-### CI/CD (Front end) ✅
-
-### Blog Post
+### CI/CD (Back end) ✅
 
